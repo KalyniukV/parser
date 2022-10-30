@@ -33,10 +33,10 @@ public class SportEventWithTopLeaguePrintResult {
     public void print() {
         System.out.println(this);
         eventList.forEach(event -> {
-            System.out.println(event.toString());
+            System.out.println(event);
             event.marketMap.values().forEach(market -> {
-                System.out.println(market.toString());
-                market.runnersList.forEach(runners -> System.out.println(runners.toString()));
+                System.out.println(market);
+                market.runnersList.forEach(System.out::println);
             });
         });
     }
