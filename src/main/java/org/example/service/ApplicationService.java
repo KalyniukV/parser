@@ -14,8 +14,8 @@ import java.util.concurrent.ExecutionException;
 
 
 public class ApplicationService {
-    SportService sportService = new SportService();
-    LeagueService leagueService = new LeagueService();
+    private final SportService sportService = new SportService();
+    private final LeagueService leagueService = new LeagueService();
 
     public void init() {
         ExecutorService executorService = Executors.newFixedThreadPool(3);

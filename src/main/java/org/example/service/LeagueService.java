@@ -17,7 +17,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class LeagueService extends BaseLeoService {
-    EventService eventService = new EventService();
+    private final EventService eventService = new EventService();
 
     public List<SportEventWithTopLeaguePrintResult> getPrintEventsInRegionTopLeagueResults(List<Region> regions) {
         return getTopLeaguesFromRegions(regions)
