@@ -6,15 +6,16 @@ import java.util.List;
 import java.util.Map;
 
 public class SportEventWithTopLeaguePrintResult {
-    String sportName;
-    String regionName;
-    String leagueName;
-    List<Event> eventList = new ArrayList<>();
+    private final String sportName;
+    private final String regionName;
+    private final String leagueName;
+    private final List<Event> eventList;
 
     public SportEventWithTopLeaguePrintResult(String sportName, String regionName, String leagueName) {
         this.sportName = sportName;
         this.regionName = regionName;
         this.leagueName = leagueName;
+        this.eventList = new ArrayList<>();
     }
 
     public String getSportName() {
@@ -47,15 +48,16 @@ public class SportEventWithTopLeaguePrintResult {
     }
 
     private class Event {
-        String name;
-        String startTime;
-        Long id;
-        Map<String, Market> marketMap = new LinkedHashMap<>();
+        private final String name;
+        private final String startTime;
+        private final Long id;
+        private final Map<String, Market> marketMap;
 
         public Event(String name, String startTime, Long id) {
             this.name = name;
             this.startTime = startTime;
             this.id = id;
+            this.marketMap = new LinkedHashMap<>();
         }
 
         public void addMarketWithRunners (String marketName, Runners runners) {
@@ -76,10 +78,11 @@ public class SportEventWithTopLeaguePrintResult {
 
     private class Market {
         private final String name;
-        private final List<Runners> runnersList = new ArrayList<>();
+        private final List<Runners> runnersList;
 
         public Market(String name) {
             this.name = name;
+            this.runnersList = new ArrayList<>();
         }
 
         public void addRunners(Runners runners) {
