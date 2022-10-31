@@ -1,6 +1,5 @@
 package org.example.service;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import org.example.exception.LoadDataException;
 import org.example.util.LoadDataHelper;
 import org.example.model.SportEventWithTopLeaguePrintResult;
@@ -37,8 +36,8 @@ public class LeagueService extends BaseLeoService {
                         .forEach(league -> {
                             try {
                                 String json = LoadDataHelper.loadData(BASE_URL + "changes/all?ctag=ru-UA&vtag=9c2cd386-31e1-4ce9-a140-28e9b63a9300&league_id=" + league.getId() + "&hideClosed=true&flags=reg,mm2,rrc,nodup,urlv2");
-                                List<LeagueInfo> leagueInfos = MapperHelper.toObject(json, new TypeReference<List<LeagueInfo>>() {});
-                                leagueList.addAll(leagueInfos);
+                                LeagueInfo leagueInfo = MapperHelper.toObject(json, LeagueInfo.class);
+                                leagueList.add(leagueInfo);
                             } catch (IOException | LoadDataException e) {
                                 System.out.println(e.getMessage());
                             }

@@ -10,31 +10,26 @@ import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 public class LoadDataHelper {
 
     public static String loadData(String urlStr) throws LoadDataException {
-        URLConnection urlConnection = getURLConnection(urlStr)
-                .orElseThrow(() -> new LoadDataException("Error load data by url: " + urlStr));
-
-        return dataResult(urlConnection)
-                .orElseThrow(() -> new LoadDataException("Error read data from url: " + urlStr));
+        return dataResult(getURLConnection(urlStr));
     }
 
-    private static Optional<URLConnection> getURLConnection(String urlStr) {
-        URLConnection urlConnection = null;
+    private static URLConnection getURLConnection(String urlStr) throws LoadDataException {
+        URLConnection urlConnection;
         try {
             URL url = new URL(urlStr);
             urlConnection = url.openConnection();
             setProperty(urlConnection);
         } catch (IOException e) {
-            e.printStackTrace();
+           throw new LoadDataException("Error load data by url: " + urlStr);
         }
-        return Optional.ofNullable(urlConnection);
+        return urlConnection;
     }
 
-    private static Optional<String> dataResult(URLConnection urlConnection) {
+    private static String dataResult(URLConnection urlConnection) throws LoadDataException {
         StringBuilder result;
         try (BufferedReader in = new BufferedReader(
                 new InputStreamReader(urlConnection.getInputStream(), StandardCharsets.UTF_8)
@@ -45,10 +40,9 @@ public class LoadDataHelper {
                 result.append(inputLine);
             }
         } catch (IOException e) {
-            return Optional.empty();
+            throw new LoadDataException("Error read data from url: " + urlConnection.getURL());
         }
-
-        return Optional.of(result.toString());
+        return result.toString();
     }
 
     private static void setProperty(URLConnection urlConnection) {
